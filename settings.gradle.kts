@@ -4,7 +4,8 @@ buildCache {
         url = uri(System.getenv("GRADLE_REMOTE_CACHE_URL") ?: "http://192.168.0.189:5071/cache/")
         isAllowInsecureProtocol = true
         isAllowUntrustedServer = true
-        isPush = System.getenv("GRADLE_REMOTE_CACHE_PUSH" ?: "true").toBoolean()
+        val isPushString = System.getenv("GRADLE_REMOTE_CACHE_PUSH")
+        isPush = isPushString?.toBoolean() ?: true
         credentials {
             username = System.getenv("GRADLE_REMOTE_CACHE_USERNAME" ?: "user009")
             password = System.getenv("GRADLE_REMOTE_CACHE_PASSWORD" ?: "ulpuugz7vyymeweqamr2daiide")
