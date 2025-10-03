@@ -7,8 +7,8 @@ buildCache {
         val isPushString = System.getenv("GRADLE_REMOTE_CACHE_USH")
         isPush = isPushString.toBoolean() ?: true
         credentials {
-            username = System.getenv("GRADLE_REMOTE_CACHE_USERNAME" ?: "user009")
-            password = System.getenv("GRADLE_REMOTE_CACHE_PASSWORD" ?: "ulpuugz7vyymeweqamr2daiide")
+            username = "user009"
+            password = "ulpuugz7vyymeweqamr2daiide"
         }
 
     }
