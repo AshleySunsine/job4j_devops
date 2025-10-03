@@ -39,4 +39,12 @@ class CalcApplicationTests {
         assertThat(output.getBody()).isEqualTo(expected);
     }
 
+    @Test
+    public void whenNegativeNumberthree() {
+        var input = new TwoArgs(-3, -1);
+        var expected = new Result(-4);
+        var output = new CalcController().summarise(input);
+        assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
+        assertThat(output.getBody()).isEqualTo(expected);
+    }
 }
