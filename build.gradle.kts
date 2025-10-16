@@ -9,9 +9,15 @@ plugins {
 
 group = "ru.job4j.devops"
 version = "1.0.0"
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.liquibase:liquibase-core:4.30.0")
+    implementation("org.postgresql:postgresql:42.7.4")
+}
 
-
-
+repositories {
+    mavenCentral()
+}
 
 tasks.jacocoTestCoverageVerification {
     violationRules {
