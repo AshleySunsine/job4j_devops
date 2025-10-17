@@ -60,6 +60,7 @@ dependencies {
     liquibaseRuntime("ch.qos.logback:logback-core:1.5.15")
     liquibaseRuntime("ch.qos.logback:logback-classic:1.5.15")
     liquibaseRuntime("info.picocli:picocli:4.6.1")
+    testImplementation ("com.h2database:h2")
 }
 
 buildscript {
