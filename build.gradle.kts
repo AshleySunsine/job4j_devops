@@ -109,6 +109,9 @@ tasks.spotbugsMain {
     }
 }
 
-tasks.test {
-    finalizedBy(tasks.spotbugsMain)
+tasks.named<Test>("test") {
+    systemProperty("spring.datasource.url", env.DB_URL.value)
+    systemProperty("spring.datasource.username", env.DB_USERNAME.value)
+    systemProperty("spring.datasource.password", env.DB_PASSWORD.value)
 }
+
