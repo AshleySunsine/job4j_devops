@@ -86,7 +86,19 @@ liquibase {
     runList = "main"
 }
 */
-
+liquibase {
+    activities.register("main") {
+        this.arguments = mapOf(
+                "logLevel"       to "info",
+                "url"            to "jdbc:h2:mem:testdb",
+                "username"       to "sa",
+                "password"       to "",
+                "classpath"      to "src/main/resources",
+                "changelogFile"  to "db/changelog/db.changelog-master.xml"
+        )
+    }
+    runList = "main"
+}
 
 tasks.withType<Test> {
     useJUnitPlatform()
