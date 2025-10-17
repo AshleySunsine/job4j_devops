@@ -85,7 +85,7 @@ liquibase {
     }
     runList = "main"
 }
-*/
+}*/
 liquibase {
     activities.register("main") {
         this.arguments = mapOf(
@@ -98,7 +98,7 @@ liquibase {
         )
     }
     runList = "main"
-}
+
 
 tasks.withType<Test> {
     useJUnitPlatform()
