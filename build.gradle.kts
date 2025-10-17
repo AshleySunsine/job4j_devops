@@ -85,6 +85,7 @@ liquibase {
     }
     runList = "main"
 }
+
 */
 liquibase {
     activities.register("main") {
