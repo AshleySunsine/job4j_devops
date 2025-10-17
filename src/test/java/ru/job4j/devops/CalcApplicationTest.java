@@ -10,7 +10,7 @@ import ru.job4j.devops.models.TwoArgs;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class CalcApplicationTests {
+class CalcApplicationTest {
 
     @Test
     void contextLoads() {

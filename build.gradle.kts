@@ -6,7 +6,6 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
     id("com.github.spotbugs") version "6.0.26"
     id("org.liquibase.gradle") version "3.0.1"
-
 }
 
 group = "ru.job4j.devops"
@@ -71,7 +70,7 @@ buildscript {
         classpath("org.liquibase:liquibase-core:4.30.0")
     }
 }
-
+/*
 liquibase {
     activities.register("main") {
         this.arguments = mapOf(
@@ -85,7 +84,7 @@ liquibase {
     }
     runList = "main"
 }
-
+*/
 
 
 tasks.withType<Test> {
