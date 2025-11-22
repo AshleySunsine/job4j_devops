@@ -114,4 +114,3 @@ tasks.named<Test>("test") {
     systemProperty("spring.datasource.username", env.DB_USERNAME.value)
     systemProperty("spring.datasource.password", env.DB_PASSWORD.value)
 }
-
