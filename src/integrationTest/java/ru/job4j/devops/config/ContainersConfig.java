@@ -14,6 +14,7 @@ import org.testcontainers.utility.DockerImageName;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -35,14 +36,21 @@ public abstract class ContainersConfig {
         KAFKA.start();
     }
 
-    public static void createTopics() throws Exception {
-        try (AdminClient adminClient = AdminClient.create(Map.of(
+    public  static  void  createTopics()  throws  Exception  {
+        try  (AdminClient  adminClient  =  AdminClient.create(Map.of(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA.getBootstrapServers()
         ))) {
-            NewTopic topic = new NewTopic("signup", 1, (short) 1);
-            adminClient.createTopics(List.of(topic)).all().get();
-            topic = new NewTopic("calcEvent", 1, (short) 1);
-            adminClient.createTopics(List.of(topic)).all().get();
+            Set<String> existingTopics = adminClient.listTopics().names().get();
+
+            if (!existingTopics.contains("signup")) {
+                NewTopic signupTopic = new NewTopic("signup", 1, (short) 1);
+                adminClient.createTopics(List.of(signupTopic)).all().get();
+            }
+
+            if (!existingTopics.contains("calcEvent")) {
+                NewTopic calcEventTopic = new NewTopic("calcEvent", 1, (short) 1);
+                adminClient.createTopics(List.of(calcEventTopic)).all().get();
+            }
         } catch (Exception e) {
             throw new Exception(e);
         }
