@@ -63,10 +63,10 @@ public abstract class ContainersConfig {
         registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRES::getUsername);
         registry.add("spring.datasource.password", POSTGRES::getPassword);
-        //  Добавьте  эти  строки  для  логирования  SQL  и  Hibernate
-        registry.add("spring.jpa.show-sql", () -> true);
-        registry.add("spring.jpa.properties.hibernate.format_sql", () -> true);
-        registry.add("logging.level.org.hibernate.SQL", () -> "DEBUG");
-        registry.add("logging.level.org.hibernate.type.descriptor.sql.BasicBinder", () -> "TRACE");
+
+        //registry.add("spring.jpa.show-sql", () -> true);
+        //registry.add("spring.jpa.properties.hibernate.format_sql", () -> true);
+        //registry.add("logging.level.org.hibernate.SQL", () -> "DEBUG");
+        //registry.add("logging.level.org.hibernate.type.descriptor.sql.BasicBinder", () -> "TRACE");
     }
 }
