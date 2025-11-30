@@ -47,10 +47,10 @@ class UserRepositoryTest {
     @Test
     public void whenSaveUser() {
         var user = new User();
-        user.setName("Job4j");
+        user.setUsername("Job4j");
         userRepository.save(user);
         var foundUser = userRepository.findById(user.getId());
         assertThat(foundUser).isPresent();
-        assertThat(foundUser.get().getName()).isEqualTo("Job4j");
+        assertThat(foundUser.get().getUsername()).isEqualTo("Job4j");
     }
 }

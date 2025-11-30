@@ -61,7 +61,7 @@ class CalcServiceIntegrationTest {
     @Test
     void whenAddNumbersThenEventSaved() {
         User user = new User();
-        user.setName("testuser");
+        user.setUsername("testuser");
         User savedUser = userRepository.save(user);
 
         int first = 5;
@@ -85,7 +85,7 @@ class CalcServiceIntegrationTest {
     @Test
     void whenAddNegativeNumbersThenEventSaved() {
         User user = new User();
-        user.setName("testuser2");
+        user.setUsername("testuser2");
         User savedUser = userRepository.save(user);
 
         int result = calcService.add(savedUser, -5, -3);
@@ -104,7 +104,7 @@ class CalcServiceIntegrationTest {
     @Test
     void whenAddMultipleTimesThenAllEventsSaved() {
         User user = new User();
-        user.setName("testuser3");
+        user.setUsername("testuser3");
         User savedUser = userRepository.save(user);
 
         calcService.add(savedUser, 1, 1);
@@ -129,7 +129,7 @@ class CalcServiceIntegrationTest {
     @Test
     void whenAddWithZeroThenEventSaved() {
         User user = new User();
-        user.setName("testuser4");
+        user.setUsername("testuser4");
         User savedUser = userRepository.save(user);
 
         int result = calcService.add(savedUser, 10, 0);
@@ -144,7 +144,7 @@ class CalcServiceIntegrationTest {
     @Test
     void whenAddLargeNumbersThenEventSaved() {
         User user = new User();
-        user.setName("testuser5");
+        user.setUsername("testuser5");
         User savedUser = userRepository.save(user);
 
         int result = calcService.add(savedUser, Integer.MAX_VALUE, 1);
@@ -160,11 +160,11 @@ class CalcServiceIntegrationTest {
     @Test
     void whenAddForDifferentUsersThenSeparateEventsSaved() {
         User user1 = new User();
-        user1.setName("user1");
+        user1.setUsername("user1");
         User savedUser1 = userRepository.save(user1);
 
         User user2 = new User();
-        user2.setName("user2");
+        user2.setUsername("user2");
         User savedUser2 = userRepository.save(user2);
 
         calcService.add(savedUser1, 1, 1);
@@ -183,7 +183,7 @@ class CalcServiceIntegrationTest {
     @Test
     void whenAddThenEventHasCorrectTimestamp() {
         User user = new User();
-        user.setName("testuser6");
+        user.setUsername("testuser6");
         User savedUser = userRepository.save(user);
 
         LocalDateTime beforeTest = LocalDateTime.now().minusSeconds(1);
@@ -200,11 +200,11 @@ class CalcServiceIntegrationTest {
     @Test
     void whenFindEventsByUserThenReturnCorrectEvents() {
         User user1 = new User();
-        user1.setName("user1");
+        user1.setUsername("user1");
         User savedUser1 = userRepository.save(user1);
 
         User user2 = new User();
-        user2.setName("user2");
+        user2.setUsername("user2");
         User savedUser2 = userRepository.save(user2);
 
         calcService.add(savedUser1, 1, 1);
@@ -224,7 +224,7 @@ class CalcServiceIntegrationTest {
     @Test
     void whenDatabaseIsEmptyThenNoEvents() {
         User user = new User();
-        user.setName("testuser7");
+        user.setUsername("testuser7");
         userRepository.save(user);
 
         var events = calcEventRepository.findAll();
@@ -234,7 +234,7 @@ class CalcServiceIntegrationTest {
     @Test
     void whenAddMultipleOperationsThenAllHaveUniqueIds() {
         User user = new User();
-        user.setName("testuser8");
+        user.setUsername("testuser8");
         User savedUser = userRepository.save(user);
 
         calcService.add(savedUser, 1, 1);

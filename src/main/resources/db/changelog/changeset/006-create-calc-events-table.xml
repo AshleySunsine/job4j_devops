@@ -3,9 +3,15 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="001-create-calc-events-table" author="your-name">
+    <changeSet id="006-create-calc-events-table" author="your-name">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="calc_events"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="calc_events">
             <column name="id" type="BIGSERIAL" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -24,20 +30,36 @@
             <column name="result" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="createDate" type="TIMESTAMP">
+            <column name="create_date" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
             <column name="type" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
 
+    <changeSet id="007-create-index-user-id" author="your-name">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="calc_events"/>
+            <not>
+                <indexExists indexName="idx_calc_events_user_id" tableName="calc_events"/>
+            </not>
+        </preConditions>
         <createIndex tableName="calc_events" indexName="idx_calc_events_user_id">
             <column name="user_id"/>
         </createIndex>
+    </changeSet>
 
+    <changeSet id="008-create-index-createdate" author="your-name">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="calc_events"/>
+            <not>
+                <indexExists indexName="idx_calc_events_create_date" tableName="calc_events"/>
+            </not>
+        </preConditions>
         <createIndex tableName="calc_events" indexName="idx_calc_events_createdate">
-            <column name="createDate"/>
+            <column name="create_date"/>
         </createIndex>
     </changeSet>
 </databaseChangeLog>

@@ -1,6 +1,5 @@
 package ru.job4j.devops.controllers;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatusCode;
 import ru.job4j.devops.models.Result;

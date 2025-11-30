@@ -3,6 +3,7 @@ package ru.job4j.devops.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -22,13 +23,12 @@ public class CalcEvent {
     private int second;
     private int result;
 
-    @Column(name = "createdate")
+    @Column(name = "create_date")
     private LocalDateTime createDate;
 
     private String type;
 
     public CalcEvent(User user, int first, int second, int result, String type) {
-        // Используем setter для установки пользователя
         setUser(user);
         this.first = first;
         this.second = second;
