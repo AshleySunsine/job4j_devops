@@ -20,4 +20,7 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <include file="changeset/006-create-calc-events-table.xml"
              author="Sergey"
              relativeToChangelogFile="true"/>
+    <include file="changeset/007-ddl-create-result.sql"
+             author="Ash"
+             relativeToChangelogFile="true"/>
 </databaseChangeLog>
