@@ -14,7 +14,7 @@ public class UserSignUpEventListener {
 
     private final UserRepository userRepository;
 
-    @KafkaListener(topics = "signup", groupId = "job4j")
+    //@KafkaListener(topics = "signup", groupId = "job4j")
     public void signup(User user) {
         log.debug("Received user: {}", user.getUsername());
         userRepository.save(user);

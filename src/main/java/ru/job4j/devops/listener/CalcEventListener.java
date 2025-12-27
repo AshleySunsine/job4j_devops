@@ -13,7 +13,7 @@ import ru.job4j.devops.repository.CalcEventRepository;
 public class CalcEventListener {
     private final CalcEventRepository repository;
 
-    @KafkaListener(topics = "calcEvent", groupId = "job4j")
+    //@KafkaListener(topics = "calcEvent", groupId = "job4j")
     public void event(CalcEvent calcEvent) {
         log.debug("Calculation event type:{}, result:{}", calcEvent.getType(), calcEvent.getResult());
         repository.save(calcEvent);
