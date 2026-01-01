@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'agent-kube' }
+    agent { label 'Host-node' }
 
     tools {
         git 'Default'
