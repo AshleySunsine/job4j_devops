@@ -10,3 +10,5 @@ spec:
     - port: 8080
       targetPort: 8080
       nodePort: 30080
+
+      #curl -X POST http://192.168.49.2:30080/calc/summarise -d '{"first": 1, "second": 1}' -H "Content-Type: application/json"
