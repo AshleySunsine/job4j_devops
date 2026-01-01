@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+    stage('Checkout') {
+                steps {
+                    git branch: 'Pipeline-for-K8s', url: 'https://github.com/AshleySunsine/job4j_devops.git'
+                }
+            }
+
         stage('kubectl') {
             steps {
                 script {
