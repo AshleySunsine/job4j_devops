@@ -1,9 +1,0 @@
-secret:
-  username: "cG9zdGdyZXM="   # base64-кодированное "postgres"
-  password: "cG9zdGdyZXM="   # base64-кодированное "postgres"
-
-config:
-  database_url: jdbc:postgresql://192.168.0.189:5432/job4j_devops?ssl=false
-
-containers:
-  image: "parsentev/job4j_devops:v.1.0.1"
