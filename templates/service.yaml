@@ -14,3 +14,4 @@ spec:
       # kubectl config view
       # minikube service list
       #curl -X POST http://192.168.49.2:30080/calc/summarise -d '{"first": 1, "second": 1}' -H "Content-Type: application/json"
+      #curl http://localhost/calc/curl -H "Host: calculator.local" http://192.168.49.2/calc/
