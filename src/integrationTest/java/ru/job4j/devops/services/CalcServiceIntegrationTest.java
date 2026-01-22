@@ -53,7 +53,6 @@ class CalcServiceIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        // Очистка базы перед каждым тестом
         calcEventRepository.deleteAll();
         userRepository.deleteAll();
     }
@@ -117,11 +116,9 @@ class CalcServiceIntegrationTest {
         assertThat(events.stream().map(CalcEvent::getResult))
                 .containsExactly(2, 4, 6);
 
-        // Проверяем что все события принадлежат одному пользователю
         assertThat(events.stream().map(e -> e.getUser().getId()))
                 .containsOnly(savedUser.getId());
 
-        // Проверяем что все события имеют правильный тип
         assertThat(events.stream().map(CalcEvent::getType))
                 .containsOnly("ADDITION");
     }
@@ -149,7 +146,6 @@ class CalcServiceIntegrationTest {
 
         int result = calcService.add(savedUser, Integer.MAX_VALUE, 1);
 
-        // Проверяем переполнение (должно быть отрицательное число)
         assertThat(result).isEqualTo(Integer.MIN_VALUE);
 
         var events = calcEventRepository.findAll();
@@ -173,7 +169,6 @@ class CalcServiceIntegrationTest {
         var events = calcEventRepository.findAll();
         assertThat(events).hasSize(2);
 
-        // Проверяем что события принадлежат разным пользователям
         var userIds = events.stream()
                 .map(e -> e.getUser().getId())
                 .collect(Collectors.toSet());
@@ -211,7 +206,6 @@ class CalcServiceIntegrationTest {
         calcService.add(savedUser1, 2, 2);
         calcService.add(savedUser2, 3, 3);
 
-        // Проверяем события для первого пользователя
         var user1Events = calcEventRepository.findAll().stream()
                 .filter(e -> e.getUser().getId().equals(savedUser1.getId()))
                 .collect(Collectors.toList());
@@ -243,13 +237,11 @@ class CalcServiceIntegrationTest {
 
         var events = calcEventRepository.findAll();
 
-        // Проверяем что у всех событий уникальные ID
         var eventIds = events.stream()
                 .map(CalcEvent::getId)
                 .collect(Collectors.toSet());
         assertThat(eventIds).hasSize(3);
 
-        // Проверяем что ID не null
         assertThat(events).allMatch(event -> event.getId() != null);
     }
 }

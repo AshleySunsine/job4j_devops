@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatusCode;
 import ru.job4j.devops.models.Result;
 import ru.job4j.devops.models.TwoArgs;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CalcControllerTest {
@@ -12,7 +14,7 @@ class CalcControllerTest {
     @Test
     public void whenOnePlusOneThenTwo() {
         var input = new TwoArgs(1, 1);
-        var expected = new Result(2);
+        var expected = new Result(999L, 1D, 1D, 2D, LocalDate.now(), "Sum");
         var output = new CalcController().summarise(input);
         assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
         assertThat(output.getBody()).isEqualTo(expected);
@@ -21,7 +23,7 @@ class CalcControllerTest {
     @Test
     public void whenNegativeNumber() {
         var input = new TwoArgs(-1, -1);
-        var expected = new Result(-2);
+        var expected = new Result(999L, -1D, -1D, 2D, LocalDate.now(), "Sum");
         var output = new CalcController().summarise(input);
         assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
         assertThat(output.getBody()).isEqualTo(expected);
@@ -30,7 +32,7 @@ class CalcControllerTest {
     @Test
     public void whenZeroPlusZero() {
         var input = new TwoArgs(0, 3);
-        var expected = new Result(3);
+        var expected = new Result(999L, 0D, 3D, 3D, LocalDate.now(), "Sum");
         var output = new CalcController().summarise(input);
         assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
         assertThat(output.getBody()).isEqualTo(expected);
@@ -39,7 +41,7 @@ class CalcControllerTest {
     @Test
     public void whenTwoTimesTwoThenFour() {
         var input = new TwoArgs(2, 2);
-        var expected = new Result(4);
+        var expected = new Result(999L, 2D, 2D, 4D, LocalDate.now(), "Sum");
         var output = new CalcController().times(input);
         assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
         assertThat(output.getBody()).isEqualTo(expected);
@@ -48,7 +50,7 @@ class CalcControllerTest {
     @Test
     public void whenZeroTimesZero() {
         var input = new TwoArgs(0, 0);
-        var expected = new Result(0);
+        var expected = new Result(999L, 0D, 0D, 0D, LocalDate.now(), "Sum");
         var output = new CalcController().times(input);
         assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
         assertThat(output.getBody()).isEqualTo(expected);
@@ -57,7 +59,7 @@ class CalcControllerTest {
     @Test
     public void whenTimesNegatives() {
         var input = new TwoArgs(-3, -3);
-        var expected = new Result(9);
+        var expected = new Result(999L, -3D, -3D, 6D, LocalDate.now(), "Sum");
         var output = new CalcController().times(input);
         assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
         assertThat(output.getBody()).isEqualTo(expected);
