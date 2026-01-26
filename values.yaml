@@ -6,4 +6,4 @@ config:
   database_url: jdbc:postgresql://192.168.0.189:5432/job4j_devops?ssl=false
 
 containers:
-  image: "parsentev/job4j_devops:v.1.0.1"
+  image: "ashleygt/job4j_devops:v1"
