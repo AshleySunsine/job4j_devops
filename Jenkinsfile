@@ -1,8 +1,9 @@
 pipeline {
     agent { label 'Host-node' }
     environment {
-        KUBECONFIG = "/var/lib/jenkins/.minikube/config"
+      KUBECONFIG = "/home/ash/.kube/config"
     }
+
     tools {
         git 'Default'
     }
