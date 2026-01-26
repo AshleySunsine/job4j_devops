@@ -12,6 +12,7 @@ pipeline {
         stage('kubectl') {
             steps {
                 script {
+                    sh 'whoami'
                     sh 'kubectl version'
                     sh 'kubectl apply -f secret.yaml'
                     sh 'kubectl apply -f configmap.yaml'
