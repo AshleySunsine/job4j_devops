@@ -141,11 +141,6 @@ tasks.register<Zip>("zipJavaDoc") {
 
 tasks.spotbugsMain {
     ignoreFailures = true
-
-    //reports.create("html") {
-    //    required = true
-    //    outputLocation.set(layout.buildDirectory.file("reports/spotbugs/spotbugs.html"))
-    //}
 }
 
 tasks.named<Test>("test") {

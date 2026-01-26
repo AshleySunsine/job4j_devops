@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'Host-node' }
+    environment {
+      KUBECONFIG = "/home/ash/.kube/config"
+    }
 
     tools {
         git 'Default'
