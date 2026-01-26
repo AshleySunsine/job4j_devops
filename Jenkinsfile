@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'Host-node' }
     environment {
-      KUBECONFIG = "/home/ash/.kube/config"
+        KUBECONFIG = "/var/lib/jenkins/.kube/config"
     }
 
     tools {
