@@ -7,10 +7,14 @@ plugins {
     id("com.github.spotbugs") version "6.0.26"
     id("org.liquibase.gradle") version "3.0.1"
     id("co.uzzu.dotenv.gradle") version "4.0.0"
+    id("maven-publish")
 }
 
 group = "ru.job4j.devops"
 version = "1.0.0"
+
+val nexusUrl = "http://192.168.0.189:8085"
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.liquibase:liquibase-core:4.30.0")
@@ -24,6 +28,10 @@ dependencies {
 }
 
 repositories {
+    maven {
+        url = uri("${nexusUrl}/repository/maven-public/")
+        isAllowInsecureProtocol = true
+    }
     mavenCentral()
 }
 
@@ -35,7 +43,6 @@ val integrationTest by sourceSets.creating {
         srcDir("src/integrationTest/resources")
     }
 
-    // Let the integrationTest classpath include the main and test outputs
     compileClasspath += sourceSets["main"].output + sourceSets["test"].output
     runtimeClasspath += sourceSets["main"].output + sourceSets["test"].output
 }
@@ -141,11 +148,6 @@ tasks.register<Zip>("zipJavaDoc") {
 
 tasks.spotbugsMain {
     ignoreFailures = true
-
-    //reports.create("html") {
-    //    required = true
-    //    outputLocation.set(layout.buildDirectory.file("reports/spotbugs/spotbugs.html"))
-    //}
 }
 
 tasks.named<Test>("test") {
@@ -161,10 +163,27 @@ tasks.register<Test>("integrationTest") {
     testClassesDirs = integrationTest.output.classesDirs
     classpath = integrationTest.runtimeClasspath
 
-    // Usually run after regular unit tests
     shouldRunAfter(tasks.test)
 }
 
 tasks.check {
     dependsOn("integrationTest")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            url = uri("${nexusUrl}/repository/maven-releases/")
+            isAllowInsecureProtocol = true
+            credentials {
+                username = "devops"
+                password = "1111"
+            }
+        }
+    }
 }

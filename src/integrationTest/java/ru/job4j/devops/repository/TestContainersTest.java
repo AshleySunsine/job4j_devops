@@ -9,7 +9,6 @@ import org.testcontainers.containers.wait.strategy.Wait;
 
 import java.time.Duration;
 
-@Disabled("Появились интеграционные тесты")
 class TestContainersTest {
     private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>(
             "postgres:16-alpine"

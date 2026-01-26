@@ -24,7 +24,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Testcontainers
 @SpringBootTest
-@Disabled("Появились интеграционные тесты")
 class CalcServiceIntegrationTest {
 
     @Container
