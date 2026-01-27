@@ -3,7 +3,7 @@ FROM eclipse-temurin:21-jdk AS builder
 WORKDIR /app
 COPY . .
 
-RUN ./gradlew build -x test
+RUN ./gradlew build -x test -x integrationTest
 
 RUN ls -l build/libs/
 
