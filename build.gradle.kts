@@ -24,7 +24,7 @@ val reposConfig = mapOf(
     "password" to (project.findProperty("naexusPassword")?.toString()
         ?: System.getenv("NEXUS_PASSWORD")
         ?: ""),
-    "isLocal" to (project.findProperty("nexusIsLocal")?.toString().toBoolean()
+    "isLocal" to (project.findProperty("nexusIsLocal")?.toString()?.toBoolean()
         ?: System.getenv("NEXUS_IS_LOCAL")?.toBoolean() ?: false
             )
 )
@@ -201,6 +201,7 @@ publishing {
 fun RepositoryHandler.addNexusOrCentral() {
     println("${reposConfig["isLocal"]}")
     println("${nexusUrlDefault}")
+    println(System.getenv("NEXUS_IS_LOCAL"))
     if (reposConfig["isLocal"] == true) {
         println("Используем ЛОКАЛЬНЫЙ Nexus: ${reposConfig["url"]}")
         maven {
