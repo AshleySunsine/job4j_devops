@@ -15,6 +15,29 @@ pipeline {
             steps {
                 script {
                 sh '''
+                                echo "=== ДИАГНОСТИКА ==="
+                                echo "Контейнер ID: $(cat /etc/hostname)"
+                                echo "Пользователь: $(whoami)"
+                                echo "Текущая директория: $(pwd)"
+
+                                echo "Поиск файла .env.develop:"
+                                find /var -name ".env.develop" 2>/dev/null
+
+                                echo "Проверка конкретного пути:"
+                                FILE="/var/agent-jdk21/env/.env.develop"
+                                if [ -f "$FILE" ]; then
+                                    echo "✅ Файл НАЙДЕН!"
+                                    ls -la "$FILE"
+                                    echo "Содержимое:"
+                                    cat "$FILE"
+                                else
+                                    echo "❌ Файл НЕ НАЙДЕН по пути: $FILE"
+                                    echo "Существующие пути /var/agent-jdk21/:"
+                                    find /var/agent-jdk21 -type f 2>/dev/null | head -10
+                                fi
+                            '''
+
+                sh '''
                                 echo "Путь к файлу: /var/agent-jdk21/env/.env.develop"
                                 echo "Содержимое:"
                                 cat /var/agent-jdk21/env/.env.develop
