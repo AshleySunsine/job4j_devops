@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ru.job4j.devops"
-version = "1.0.0"
+version = "v5.0.1"
 
 val debug = env.DEV_DEBUG.orNull()?.toBoolean()
 val nexusUrlDefault = "http://192.168.0.189:8085"

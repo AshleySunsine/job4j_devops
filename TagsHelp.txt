@@ -1,0 +1,10 @@
+git tag -d v5.0.1
+git push origin --delete v5.0.1
+git tag -a v5.0.1 HEAD -m "5-й стабильный релиз"  # Явно указываем HEAD
+git push origin v5.0.1
+
+# Проверить
+git describe --tags --exact-match
+
+echo "Коммит тега: $(git rev-parse v5.0.1)"
+echo "Текущий коммит: $(git rev-parse HEAD)"
