@@ -13,19 +13,20 @@ plugins {
 group = "ru.job4j.devops"
 version = "1.0.0"
 
+val debug = env.DEV_DEBUG.orNull()?.toBoolean()
 val nexusUrlDefault = "http://192.168.0.189:8085"
 val reposConfig = mapOf(
     "url" to (project.findProperty("nexusUrl")?.toString()
-        ?: System.getenv("NEXUS_URL")
+        ?: env.NEXUS_URL.orNull()
         ?: nexusUrlDefault),
     "username" to (project.findProperty("nexusUsername")?.toString()
-        ?: System.getenv("NEXUS_USERNAME")
+        ?: env.NEXUS_USERNAME.orNull()
         ?: ""),
-    "password" to (project.findProperty("naexusPassword")?.toString()
-        ?: System.getenv("NEXUS_PASSWORD")
+    "password" to (project.findProperty("nexusPassword")?.toString()
+        ?: env.NEXUS_PASSWORD.orNull()
         ?: ""),
     "isLocal" to (project.findProperty("nexusIsLocal")?.toString()?.toBoolean()
-        ?: System.getenv("NEXUS_IS_LOCAL")?.toBoolean() ?: false
+        ?: env.NEXUS_IS_LOCAL.orNull()?.toBoolean() ?: false
             )
 )
 
@@ -40,7 +41,6 @@ dependencies {
     testImplementation("org.testcontainers:postgresql:1.20.4")
     testImplementation("org.testcontainers:kafka:1.20.4")
 }
-
 
 repositories {
     addNexusOrCentral()
@@ -199,11 +199,21 @@ publishing {
 }
 
 fun RepositoryHandler.addNexusOrCentral() {
-    println("${reposConfig["isLocal"]}")
-    println("${nexusUrlDefault}")
-    println(System.getenv("NEXUS_IS_LOCAL"))
+    val isLocal = reposConfig["isLocal"] as? Boolean ?: false
+    if (debug!=null && debug) {
+        print("Some ENV.variables: " )
+        print("url:" + "${reposConfig["url"]}" + " -- ")
+        print("username:" + "${reposConfig["username"]}" + " -- ")
+        print("password:" + "${reposConfig["password"]}" + " -- ")
+        println("isLocal:" + "${reposConfig["isLocal"]}")
+        if (isLocal) {
+            println("Используем ЛОКАЛЬНЫЙ Nexus: ${reposConfig["url"]}")
+        } else {
+            println("Используем ПУБЛИЧНЫЕ репозитории")
+        }
+    }
+
     if (reposConfig["isLocal"] == true) {
-        println("Используем ЛОКАЛЬНЫЙ Nexus: ${reposConfig["url"]}")
         maven {
             url = uri("${reposConfig["url"]}/repository/maven-public/")
             isAllowInsecureProtocol = true
@@ -213,7 +223,6 @@ fun RepositoryHandler.addNexusOrCentral() {
             }
         }
     } else {
-        println("Используем ПУБЛИЧНЫЕ репозитории")
         mavenCentral()
     }
 }
