@@ -13,7 +13,21 @@ plugins {
 group = "ru.job4j.devops"
 version = "1.0.0"
 
-val nexusUrl = "http://192.168.0.189:8085"
+val nexusUrlDefault = "http://192.168.0.189:8085"
+val reposConfig = mapOf(
+    "url" to (project.findProperty("nexusUrl")?.toString()
+        ?: System.getenv("NEXUS_URL")
+        ?: nexusUrlDefault),
+    "username" to (project.findProperty("nexusUsername")?.toString()
+        ?: System.getenv("NEXUS_USERNAME")
+        ?: ""),
+    "password" to (project.findProperty("naexusPassword")?.toString()
+        ?: System.getenv("NEXUS_PASSWORD")
+        ?: ""),
+    "isLocal" to (project.findProperty("nexusIsLocal")?.toString().toBoolean()
+        ?: System.getenv("NEXUS_IS_LOCAL")?.toBoolean() ?: false
+            )
+)
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -27,12 +41,9 @@ dependencies {
     testImplementation("org.testcontainers:kafka:1.20.4")
 }
 
+
 repositories {
-    maven {
-        url = uri("${nexusUrl}/repository/maven-public/")
-        isAllowInsecureProtocol = true
-    }
-    mavenCentral()
+    addNexusOrCentral()
 }
 
 val integrationTest by sourceSets.creating {
@@ -60,7 +71,6 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 minimum = "0.8".toBigDecimal()
             }
-            // ПРАВИЛЬНЫЙ СИНТАКСИС ДЛЯ KOTLIN DSL:
             excludes = listOf(
                     "ru.job4j.devops.models.*",
                     "ru.job4j.devops.CalcApplication"
@@ -68,7 +78,7 @@ tasks.jacocoTestCoverageVerification {
         }
 
         rule {
-            enabled = false  // В Kotlin DSL используем 'enabled' вместо 'isEnabled'
+            enabled = false
             element = "CLASS"
             includes = listOf("org.gradle.*")
 
@@ -82,7 +92,7 @@ tasks.jacocoTestCoverageVerification {
 }
 
 repositories {
-    mavenCentral()
+    addNexusOrCentral()
 }
 
 dependencies {
@@ -178,12 +188,31 @@ publishing {
     }
     repositories {
         maven {
-            url = uri("${nexusUrl}/repository/maven-releases/")
+            url = uri("${nexusUrlDefault}/repository/maven-releases/")
             isAllowInsecureProtocol = true
             credentials {
                 username = "devops"
                 password = "1111"
             }
         }
+    }
+}
+
+fun RepositoryHandler.addNexusOrCentral() {
+    println("${reposConfig["isLocal"]}")
+    println("${nexusUrlDefault}")
+    if (reposConfig["isLocal"] == true) {
+        println("Используем ЛОКАЛЬНЫЙ Nexus: ${reposConfig["url"]}")
+        maven {
+            url = uri("${reposConfig["url"]}/repository/maven-public/")
+            isAllowInsecureProtocol = true
+            credentials {
+                username = reposConfig["username"] as? String
+                password = reposConfig["password"] as? String
+            }
+        }
+    } else {
+        println("Используем ПУБЛИЧНЫЕ репозитории")
+        mavenCentral()
     }
 }
