@@ -79,7 +79,7 @@ pipeline {
                                 cat /var/agent-jdk21/env/.env.develop
                                 echo "=== Конец файла ==="
                             '''
-
+                sh 'echo "FINISH!!!!"'
                 //sh 'docker build -t job4j_devops .'
             }
         }
